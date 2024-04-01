@@ -1,0 +1,61 @@
+#!/bin/bash
+
+#  $$$$$$\                                    $$\ $$\                 $$\   $$\ $$\       $$$$$$$\                      
+# $$  __$$\                                   \__|$$ |                $$$\  $$ |$  |      $$  __$$\                     
+# $$ /  \__| $$$$$$\  $$$$$$\$$$$\   $$$$$$\  $$\ $$ | $$$$$$\        $$$$\ $$ |\_/       $$ |  $$ |$$\   $$\ $$$$$$$\  
+# $$ |      $$  __$$\ $$  _$$  _$$\ $$  __$$\ $$ |$$ |$$  __$$\       $$ $$\$$ |          $$$$$$$  |$$ |  $$ |$$  __$$\ 
+# $$ |      $$ /  $$ |$$ / $$ / $$ |$$ /  $$ |$$ |$$ |$$$$$$$$ |      $$ \$$$$ |          $$  __$$< $$ |  $$ |$$ |  $$ |
+# $$ |  $$\ $$ |  $$ |$$ | $$ | $$ |$$ |  $$ |$$ |$$ |$$   ____|      $$ |\$$$ |          $$ |  $$ |$$ |  $$ |$$ |  $$ |
+# \$$$$$$  |\$$$$$$  |$$ | $$ | $$ |$$$$$$$  |$$ |$$ |\$$$$$$$\       $$ | \$$ |          $$ |  $$ |\$$$$$$  |$$ |  $$ |
+#  \______/  \______/ \__| \__| \__|$$  ____/ \__|\__| \_______|      \__|  \__|          \__|  \__| \______/ \__|  \__|
+#                                   $$ |                                                                                
+#                                   $$ |                                                                                
+#                                   \__|                                                                                
+
+# Author: pythonHater170
+# Description: Compiles a C/C++ file automatically, executes it and deletes the executable.
+# Usage: cnr <name of C/C++ file>
+
+function display_help(){
+	echo "Usage: cnr <name of C or C++ file>"
+    echo ""
+    echo "Options:"
+    echo "  --help        Display this help message and exit"
+    echo ""
+    echo "Description:"
+    echo "  This script compiles a C or C++ file automatically."
+}
+
+if [[ "$1" == "--help" ]]; then
+    display_help
+    exit 0
+fi
+
+if [ $# -ne 1 ]; then
+	echo "Usage: <name of C/C++ file>"
+	exit 1
+fi
+
+if [[ ! $1 =~ \.c$|\.cpp$ ]]; then
+	echo "Error: File not a .c or .cpp file"
+	exit 1
+fi
+
+filename=$(basename -- "$1")
+filename="${filename%.*}"
+
+if [[ $1 =~ \.c$ ]]; then
+	gcc "$1" -o "$filename"
+fi
+
+if [[ $1 =~ \.cpp$ ]]; then
+	g++ "$1" -o "$filename"
+fi
+
+if [ $? -eq 0 ]; then
+	./"$filename"
+	rm "./$filename"
+else
+	echo "Compilation failed."
+	exit 1
+fi
