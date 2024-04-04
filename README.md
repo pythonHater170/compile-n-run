@@ -1,6 +1,6 @@
 # compile-n-run (cnr)
 
-`compile-n-run` is a command-line tool for Unix-like operating systems to automatically compile C/C++ files and run them.
+`compile-n-run` is a command-line tool for Unix-like operating systems to automatically compile C/C++, Rust files and run them.
 
 (This is a small project to get used to Bash programming, don't take it too seriously)
 
@@ -9,6 +9,7 @@
 Before installing `compile-n-run`, ensure you have the following:
 - A Linux or Unix-like operating system.
 - The `gcc` and `g++` compiler installed for compiling C and C++ programs, respectively.
+- The `rustc` compiler if you want to compile Rust
 
 ### Installation
 
