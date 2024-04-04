@@ -36,8 +36,8 @@ if [ $# -ne 1 ]; then
 	exit 1
 fi
 
-if [[ ! $1 =~ \.c$|\.cpp$ ]]; then
-	echo "Error: File not a .c or .cpp file"
+if [[ ! $1 =~ \.c$|\.cpp$|\.rs$ ]]; then
+	echo "Error: File not supported. Files supported are C/C++, and Rust"
 	exit 1
 fi
 
@@ -52,6 +52,10 @@ if [[ $1 =~ \.cpp$ ]]; then
 	g++ "$1" -o "$filename"
 fi
 
+if [[ $1 =~ \.rs$ ]]; then
+    rustc "$1"
+fi
+
 if [ $? -eq 0 ]; then
 	./"$filename"
 	rm "./$filename"
@@ -59,3 +63,4 @@ else
 	echo "Compilation failed."
 	exit 1
 fi
+
